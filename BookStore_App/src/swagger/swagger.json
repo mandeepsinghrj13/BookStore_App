@@ -1,0 +1,73 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "BookStore_App",
+        "description": "This app is created as a bookstore_app",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/api/v1/",
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "paths": {
+        "/users/user": {
+            "post": {
+                "tags": ["User"],
+                "description": "User Register in Book Store",
+                "parameters": [
+                    {
+                        "name": "User Register",
+                        "in": "body",
+                        "description": "User Registration",
+                        "schema": { 
+                            "$ref": "#/definitions/register"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "Registered Successfully"
+                    },
+                    "409": {
+                        "description": "User Already Registered"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "register": {
+            "type": "object",
+            "properties": {
+                "firstName": {
+                    "type": "string"
+                },
+                "lastName": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+                
+            },
+            "example": {
+                "firstName":"example",
+                "lastName":"example",
+                "email":"example@gmail.com",
+                "password": "Password@1234"
+            }
+        }
+    }
+}
