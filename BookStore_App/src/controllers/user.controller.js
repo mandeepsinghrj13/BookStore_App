@@ -1,6 +1,5 @@
 import HttpStatus from 'http-status-codes';
 import * as UserService from '../services/user.service';
-import { Registervalidation } from '../validators/user.validator';
 import logger from '../config/logger';
 
 /**
@@ -18,16 +17,6 @@ export const register = async (req, res, next) => {
       password: req.body.password,
       role: req.role
     };
-
-    const validationRegister = Registervalidation.validate(info);
-    if (validationRegister.error) {
-      logger.error('Wrong Input Validations');
-      res.status(HttpStatus.BAD_REQUEST).json({
-        code: HttpStatus.BAD_REQUEST,
-        message: 'Wrong Input Validations',
-        data: validationRegister
-      });
-    }
 
     const data = await UserService.register(info);
     if (data) {

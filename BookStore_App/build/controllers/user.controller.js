@@ -17,6 +17,8 @@ var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
 var UserService = _interopRequireWildcard(require("../services/user.service"));
 
+var _user2 = require("../validators/user.validator");
+
 var _logger = _interopRequireDefault(require("../config/logger"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
@@ -43,7 +45,16 @@ var register = /*#__PURE__*/function () {
               email: req.body.email,
               password: req.body.password,
               role: req.role
-            };
+            }; // const validationRegister = await Registervalidation;
+            // if (validationRegister.error) {
+            //   logger.error('Wrong Input Validations');
+            //   res.status(HttpStatus.BAD_REQUEST).json({
+            //     code: HttpStatus.BAD_REQUEST,
+            //     message: 'Wrong Input Validations',
+            //     data: validationRegister
+            //   });
+            // }
+
             _context.next = 4;
             return UserService.register(info);
 

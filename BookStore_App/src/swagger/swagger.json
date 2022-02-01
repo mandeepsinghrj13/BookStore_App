@@ -34,6 +34,9 @@
                     "201": {
                         "description": "Registered Successfully"
                     },
+                    "400": {
+                        "description": "Wrong Input Validations"
+                    },
                     "409": {
                         "description": "User Already Registered"
                     },

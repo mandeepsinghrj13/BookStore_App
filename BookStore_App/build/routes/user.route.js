@@ -24,6 +24,8 @@ function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && 
 var router = _express["default"].Router(); //route to create a new user registration
 
 
-router.post('/user', (0, _user3.setRole)('user'), _user2.newUserValidator, userController.register);
+router.post('/user', (0, _user3.setRole)('user'), _user2.registerValidator, userController.register); //route to create a new admin registration
+
+router.post('/admin', (0, _user3.setRole)('admin'), userController.register);
 var _default = router;
 exports["default"] = _default;
