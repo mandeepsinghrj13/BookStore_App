@@ -44,3 +44,41 @@ export const register = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to user login
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const login = async (req, res, next) => {
+  try {
+    const info = {
+      email: req.body.email,
+      password: req.body.password
+    };
+    const data = await UserService.login(info);
+    if (data === 'not register') {
+      logger.error('User Not Register');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'User Not Register'
+      });
+    } else if (data === 'wrong password') {
+      logger.error('Wrong Password');
+      res.status(HttpStatus.FORBIDDEN).json({
+        code: HttpStatus.FORBIDDEN,
+        message: 'Wrong Password'
+      });
+    } else {
+      logger.info('Login Successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Login Successfully',
+        token: data
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

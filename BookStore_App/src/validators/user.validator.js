@@ -20,3 +20,21 @@ export const registerValidator = (req, res, next) => {
     next();
   }
 };
+
+export const loginValidator = (req, res, next) => {
+  const schema = Joi.object({
+    email: Joi.string().pattern(new RegExp('^[a-zA-z]{2}([+-_ .]*[a-zA-Z0-9]+)*[@][a-zA-z0-9]+(.[a-z]{2,3})*$')).required(),
+    password: Joi.string().pattern(new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})')).required()
+  });
+  const { error, value } = schema.validate(req.body);
+  if (error) {
+    res.status(HttpStatus.BAD_REQUEST).json({
+      code: HttpStatus.BAD_REQUEST,
+      message: 'Wrong Input Validations',
+      data: error
+    });
+  } else {
+    req.validatedBody = value;
+    next();
+  }
+};
