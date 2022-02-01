@@ -11,4 +11,7 @@ router.post('/book', userAuth, verifyRole, bookController.addBook);
 //route to get all Book
 router.get('/book', userAuth, bookController.allBook);
 
+//route to get a single Book by their Bookid
+router.get('/book/:BookId', userAuth, bookController.getBook);
+
 export default router;

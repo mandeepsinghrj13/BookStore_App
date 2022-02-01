@@ -47,3 +47,31 @@ export const allBook = (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to get a single Book
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const getBook = async (req, res, next) => {
+  try {
+    const data = await UserService.getBook(req.params.BookId);
+    if (data == null) {
+      logger.error('Id Not Found');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Id Not Found'
+      });
+    } else {
+      logger.info('Book fetched successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Book fetched successfully',
+        data: data
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

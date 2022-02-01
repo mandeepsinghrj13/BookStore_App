@@ -21,3 +21,12 @@ export const allBook = (callback) => {
     }
   });
 };
+
+//get single Employee by Id
+export const getBook = async (BookId) => {
+  try {
+    return await User.findById(BookId);
+  } catch (error) {
+    return error;
+  }
+};
