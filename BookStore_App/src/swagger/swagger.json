@@ -45,6 +45,37 @@
                     }
                 }
             }
+        },
+        "/users/admin": {
+            "post": {
+                "tags": ["User"],
+                "description": "Admin Register in Book Store",
+                "parameters": [
+                    {
+                        "name": "Admin Register",
+                        "in": "body",
+                        "description": "Admin Registration",
+                        "schema": { 
+                            "$ref": "#/definitions/register"
+                        }
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "Registered Successfully"
+                    },
+                    "400": {
+                        "description": "Wrong Input Validations"
+                    },
+                    "409": {
+                        "description": "User Already Registered"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
