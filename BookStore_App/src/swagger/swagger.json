@@ -76,6 +76,38 @@
                     }
                 }
             }
+        },
+        "/users/login": {
+            "post": {
+                "tags": ["User"],
+                "description": "Login user",
+                "parameters": [
+                    {
+                        "name": "Login",
+                        "in": "body",
+                        "description": "User we want to login",
+                        "schema": {
+                            "$ref": "#/definitions/loginUser"
+                        }
+                    }
+                ],
+
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "login successfully"
+                    },
+                    "400": {
+                        "description": "Wrong Input Validations"
+                    },
+                    "404": {
+                        "description": "User Not Register/Not Found"
+                    },
+                    "403": {
+                        "description": "wrong password"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -101,6 +133,21 @@
                 "lastName":"example",
                 "email":"example@gmail.com",
                 "password": "Password@1234"
+            }
+        },
+        "loginUser": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "email":"example@gmail.com",
+                "password": "Password@123"
             }
         }
     }
