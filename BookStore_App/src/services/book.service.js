@@ -1,6 +1,6 @@
 import User from '../models/book.model';
 
-//create newEmployee
+//create addBook
 export const addBook = (body, callback) => {
   User.create(body, (error, data) => {
     if (data) {
