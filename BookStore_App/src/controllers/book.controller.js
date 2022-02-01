@@ -75,3 +75,32 @@ export const getBook = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to update a Book
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const updateBook = (req, res, next) => {
+  try {
+    UserService.updateBook(req.params.BookId, req.body)
+      .then((data) => {
+        logger.info('Book updated successfully');
+        res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          message: 'Book updated successfully',
+          data: data
+        });
+      })
+      .catch(() => {
+        logger.error('BookId Not Found');
+        return res.status(HttpStatus.NOT_FOUND).json({
+          code: HttpStatus.NOT_FOUND,
+          message: 'BookId Not Found'
+        });
+      });
+  } catch (error) {
+    next(error);
+  }
+};

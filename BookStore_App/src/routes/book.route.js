@@ -14,4 +14,7 @@ router.get('/book', userAuth, bookController.allBook);
 //route to get a single Book by their Bookid
 router.get('/book/:BookId', userAuth, bookController.getBook);
 
+//route to update a single Book by their Bookid
+router.put('/book/:BookId', userAuth, bookController.updateBook);
+
 export default router;
