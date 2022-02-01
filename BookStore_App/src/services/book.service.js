@@ -10,3 +10,14 @@ export const addBook = (body, callback) => {
     }
   });
 };
+
+//get all Book
+export const allBook = (callback) => {
+  User.find((error, data) => {
+    if (data) {
+      return callback(null, data);
+    } else {
+      return callback(error, null);
+    }
+  });
+};
