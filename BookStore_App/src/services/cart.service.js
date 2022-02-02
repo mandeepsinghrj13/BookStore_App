@@ -57,3 +57,14 @@ export const addToCart = async (userInfo) => {
     return error;
   }
 };
+
+//get All Carts
+export const getAllCarts = (callback) => {
+  Cart.find((error, data) => {
+    if (data) {
+      return callback(null, data);
+    } else {
+      return callback(error, null);
+    }
+  });
+};

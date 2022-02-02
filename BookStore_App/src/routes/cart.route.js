@@ -8,4 +8,7 @@ const router = express.Router();
 //route to create a addToCart
 router.post('/:bookId', userAuth, verifyRole, cartController.addToCart);
 
+//route to get all Cart
+router.get('', userAuth, cartController.getAllCarts);
+
 export default router;

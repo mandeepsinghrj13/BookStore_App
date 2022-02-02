@@ -1,4 +1,6 @@
 import * as UserService from '../services/cart.service';
+import HttpStatus from 'http-status-codes';
+import logger from '../config/logger';
 
 export const addToCart = async (req, res) => {
   try {
@@ -31,5 +33,28 @@ export const addToCart = async (req, res) => {
       message: 'Internal server error',
       success: false
     });
+  }
+};
+
+/**
+ * Controller to  getAllCarts
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const getAllCarts = (req, res, next) => {
+  try {
+    UserService.getAllCarts((error, data) => {
+      if (data) {
+        logger.info('Geting All Cart Successfully');
+        res.status(HttpStatus.OK).json({
+          code: HttpStatus.OK,
+          message: 'Geting All Cart Successfully',
+          data: data
+        });
+      }
+    });
+  } catch (error) {
+    next(error);
   }
 };
