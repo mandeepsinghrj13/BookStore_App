@@ -68,3 +68,22 @@ export const getAllCarts = (callback) => {
     }
   });
 };
+
+//get a Cart
+export const getCart = async (info) => {
+  try {
+    const cart = await Cart.findOne({ userId: info.userId });
+    if (cart) {
+      const book = cart.book.length;
+      if (book == 0) {
+        return 'Cart Is Empty';
+      } else {
+        return cart;
+      }
+    } else {
+      return 'Cart Not Found';
+    }
+  } catch (error) {
+    return error;
+  }
+};

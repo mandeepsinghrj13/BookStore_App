@@ -58,3 +58,39 @@ export const getAllCarts = (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to get a Cart
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const getCart = async (req, res, next) => {
+  try {
+    const info = {
+      userId: req.params.userId
+    };
+    const data = await UserService.getCart(info);
+    if (data == 'Cart Is Empty') {
+      logger.error('Need To Add Book, Cart Is Empty');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Need To Add Book, Cart Is Empty'
+      });
+    } else if (data == 'Cart Not Found') {
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Need To Add Book, Cart Not Found'
+      });
+    } else {
+      logger.info('Cart Fetched Successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Cart Fetched Successfully',
+        data: data
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
