@@ -131,3 +131,31 @@ export const deleteBook = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to get Book by title
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const serchTitle = async (req, res, next) => {
+  try {
+    const data = await UserService.serchTitle(req.params.title);
+    if (data.length !== 0) {
+      logger.info('Title Fetched Successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Title Fetched Successfully',
+        data: data
+      });
+    } else {
+      logger.error('Title Not Found');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Title Not Found'
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

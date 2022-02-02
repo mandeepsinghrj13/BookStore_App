@@ -56,3 +56,12 @@ export const deleteBook = async (BookId) => {
     return error;
   }
 };
+
+//get Book by title
+export const serchTitle = async (title) => {
+  try {
+    return await User.find({ title: title });
+  } catch (error) {
+    return error;
+  }
+};

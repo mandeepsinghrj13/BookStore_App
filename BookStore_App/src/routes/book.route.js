@@ -20,4 +20,7 @@ router.put('/book/:BookId', userAuth, bookController.updateBook);
 //route to delete a single Book by their Bookid
 router.delete('/book/:BookId', userAuth, verifyRole, bookController.deleteBook);
 
+//route to get search Title
+router.get('/search/:title', userAuth, bookController.serchTitle);
+
 export default router;
