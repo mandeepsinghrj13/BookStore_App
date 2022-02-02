@@ -1,8 +1,8 @@
-import User from '../models/book.model';
+import Book from '../models/book.model';
 
 //create addBook
 export const addBook = (body, callback) => {
-  User.create(body, (error, data) => {
+  Book.create(body, (error, data) => {
     if (data) {
       return callback(null, data);
     } else {
@@ -13,7 +13,7 @@ export const addBook = (body, callback) => {
 
 //get all Book
 export const allBook = (callback) => {
-  User.find((error, data) => {
+  Book.find((error, data) => {
     if (data) {
       return callback(null, data);
     } else {
@@ -25,7 +25,7 @@ export const allBook = (callback) => {
 //get Book by Id
 export const getBook = async (BookId) => {
   try {
-    return await User.findById(BookId);
+    return await Book.findById(BookId);
   } catch (error) {
     return error;
   }
@@ -34,7 +34,7 @@ export const getBook = async (BookId) => {
 //update Book
 export const updateBook = (_id, body) => {
   return new Promise((resolve, reject) => {
-    User.findByIdAndUpdate(
+    Book.findByIdAndUpdate(
       {
         _id
       },
@@ -51,7 +51,7 @@ export const updateBook = (_id, body) => {
 //delete single Book
 export const deleteBook = async (BookId) => {
   try {
-    return await User.findByIdAndDelete(BookId);
+    return await Book.findByIdAndDelete(BookId);
   } catch (error) {
     return error;
   }
@@ -60,7 +60,7 @@ export const deleteBook = async (BookId) => {
 //get Book by title
 export const serchTitle = async (title) => {
   try {
-    return await User.find({ title: title });
+    return await Book.find({ title: title });
   } catch (error) {
     return error;
   }
