@@ -47,3 +47,12 @@ export const updateBook = (_id, body) => {
       .catch((error) => reject(error));
   });
 };
+
+//delete single Book
+export const deleteBook = async (BookId) => {
+  try {
+    return await User.findByIdAndDelete(BookId);
+  } catch (error) {
+    return error;
+  }
+};
