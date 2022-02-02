@@ -14,4 +14,7 @@ router.get('', userAuth, cartController.getAllCarts);
 //route to get a Cart
 router.get('/:userId', userAuth, cartController.getCart);
 
+//route to place Order
+router.put('/:userId', userAuth, cartController.placeOrder);
+
 export default router;

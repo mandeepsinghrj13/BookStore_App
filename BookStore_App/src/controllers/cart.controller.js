@@ -94,3 +94,44 @@ export const getCart = async (req, res, next) => {
     next(error);
   }
 };
+
+/**
+ * Controller to Order Place
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const placeOrder = async (req, res, next) => {
+  try {
+    const info = {
+      userId: req.params.userId,
+      isPurchased: req.body.isPurchased
+    };
+    const data = await UserService.placeOrder(info);
+    if (data == 'Cart Is Empty') {
+      logger.error('Need To Add Book, Cart Is Empty');
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Need To Add Book, Cart Is Empty'
+      });
+    } else if (data == 'Cart Not Found') {
+      res.status(HttpStatus.NOT_FOUND).json({
+        code: HttpStatus.NOT_FOUND,
+        message: 'Need To Add Book, Cart Not Found'
+      });
+    } else if (data == false) {
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Order Cencel Successfully'
+      });
+    } else {
+      logger.info('Order Placed Successfully');
+      res.status(HttpStatus.OK).json({
+        code: HttpStatus.OK,
+        message: 'Order Placed Successfully'
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+};

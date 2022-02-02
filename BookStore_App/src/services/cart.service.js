@@ -87,3 +87,26 @@ export const getCart = async (info) => {
     return error;
   }
 };
+
+//put Order Place
+export const placeOrder = async (info) => {
+  try {
+    const cart = await Cart.findOne({ userId: info.userId });
+    if (cart) {
+      const book = cart.book.length;
+      if (book == 0) {
+        return 'Cart Is Empty';
+      } else if (cart.isPurchased == false) {
+        await Cart.findOneAndUpdate({ userId: info.userId }, { isPurchased: info.isPurchased }, { new: true });
+        return true;
+      } else {
+        await Cart.findOneAndUpdate({ userId: info.userId }, { isPurchased: info.isPurchased }, { new: true });
+        return false;
+      }
+    } else {
+      return 'Cart Not Found';
+    }
+  } catch (error) {
+    return error;
+  }
+};
