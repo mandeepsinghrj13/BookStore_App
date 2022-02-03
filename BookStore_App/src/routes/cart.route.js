@@ -17,4 +17,7 @@ router.get('/:userId', userAuth, cartController.getCart);
 //route to place Order
 router.put('/:userId', userAuth, cartController.placeOrder);
 
+//route to removeBookFromCart
+router.delete('/:userId', userAuth, cartController.removeBookFromCart);
+
 export default router;

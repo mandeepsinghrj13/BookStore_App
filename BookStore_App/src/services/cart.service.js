@@ -110,3 +110,20 @@ export const placeOrder = async (info) => {
     return error;
   }
 };
+
+export const removeBookFromCart = async (data) => {
+  try {
+    let cart = await Cart.findOne({ userId: data.userId });
+    if (cart) {
+      let itemIndex = cart.book.findIndex((p) => p.bookId == data.bookId);
+      if (itemIndex >= 1) {
+        await Cart.updateOne({ userId: data.userId }, { $pull: { book: { bookId: data.bookId } } });
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (err) {
+    return err;
+  }
+};

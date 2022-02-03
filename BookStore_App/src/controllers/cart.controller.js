@@ -135,3 +135,26 @@ export const placeOrder = async (req, res, next) => {
     next(error);
   }
 };
+
+export const removeBookFromCart = async (req, res) => {
+  try {
+    const id = { userId: req.params.userId, bookId: req.body.bookId };
+    const data = await UserService.removeBookFromCart(id);
+    if (data) {
+      return res.status(200).json({
+        success: true,
+        message: 'Book Removed From Cart Successfully'
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: 'Book Not Found In Cart'
+      });
+    }
+  } catch {
+    res.status(500).send({
+      success: false,
+      message: 'Internal server error'
+    });
+  }
+};
