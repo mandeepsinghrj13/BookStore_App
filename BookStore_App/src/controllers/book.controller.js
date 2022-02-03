@@ -10,7 +10,15 @@ import logger from '../config/logger';
  */
 export const addBook = (req, res, next) => {
   try {
-    UserService.addBook(req.body, (error, data) => {
+    const body = {
+      bookImage: req.file.path,
+      author: req.body.author,
+      title: req.body.title,
+      quantity: req.body.quantity,
+      price: req.body.price,
+      description: req.body.description
+    };
+    UserService.addBook(body, (error, data) => {
       if (data) {
         logger.info('Book Inserted Successfully');
         res.status(HttpStatus.CREATED).send({
