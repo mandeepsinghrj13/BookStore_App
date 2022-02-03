@@ -39,3 +39,21 @@ export const addToWish = async (info) => {
     throw error;
   }
 };
+
+//
+export const removeBook = async (data) => {
+  try {
+    let wishList = await wishlist.findOne({ userId: data.userId });
+    if (wishList) {
+      let itemIndex = wishList.book.findIndex((p) => p.bookId == data.bookId);
+      if (itemIndex >= 0) {
+        await wishlist.updateOne({ userId: data.userId }, { $pull: { book: { bookId: data.bookId } } });
+        return true;
+      } else {
+        return false;
+      }
+    }
+  } catch (err) {
+    return err;
+  }
+};
