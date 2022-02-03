@@ -14,9 +14,15 @@ const cartSchema = new Schema(
         },
         quantity: {
           type: Number
+        },
+        total: {
+          type: Number
         }
       }
     ],
+    totalPrice: {
+      type: Number
+    },
     isPurchased: { type: Boolean, default: false }
   },
   {
