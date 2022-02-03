@@ -7,7 +7,7 @@ var _typeof = require("@babel/runtime/helpers/typeof");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.register = exports.login = void 0;
+exports.removeBook = exports.addToWish = void 0;
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -15,21 +15,19 @@ var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/
 
 var _httpStatusCodes = _interopRequireDefault(require("http-status-codes"));
 
-var UserService = _interopRequireWildcard(require("../services/user.service"));
-
-var _logger = _interopRequireDefault(require("../config/logger"));
+var WishlistService = _interopRequireWildcard(require("../services/wishlist.service"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /**
- * Controller to create a new user registration
+ * Controller to AddToWishlist
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
  */
-var register = /*#__PURE__*/function () {
+var addToWish = /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(req, res, next) {
     var info, data;
     return _regenerator["default"].wrap(function _callee$(_context) {
@@ -38,39 +36,29 @@ var register = /*#__PURE__*/function () {
           case 0:
             _context.prev = 0;
             info = {
-              firstName: req.body.firstName,
-              lastName: req.body.lastName,
-              email: req.body.email,
-              password: req.body.password,
-              role: req.role
+              userId: req.user.id,
+              bookId: req.params.bookId
             };
             _context.next = 4;
-            return UserService.register(info);
+            return WishlistService.addToWish(info);
 
           case 4:
             data = _context.sent;
 
-            if (data) {
-              _logger["default"].info('Registered Successfully');
-
-              res.status(_httpStatusCodes["default"].CREATED).json({
-                success: true,
-                code: _httpStatusCodes["default"].CREATED,
-                message: 'Registered Successfully',
-                data: {
-                  firstName: data.firstName,
-                  lastName: data.lastName,
-                  email: data.email,
-                  role: data.role
-                }
+            if (data == true) {
+              res.status(_httpStatusCodes["default"].OK).json({
+                code: _httpStatusCodes["default"].OK,
+                message: 'Book Added Into wishlist Successfully'
+              });
+            } else if (data == 'Book Already Present') {
+              res.status(_httpStatusCodes["default"].CONFLICT).json({
+                code: _httpStatusCodes["default"].CONFLICT,
+                message: 'Book Already Into wishlist'
               });
             } else {
-              _logger["default"].error('User Already Registered');
-
-              res.status(_httpStatusCodes["default"].CONFLICT).json({
-                success: false,
-                code: _httpStatusCodes["default"].CONFLICT,
-                message: 'User Already Registered'
+              res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+                code: _httpStatusCodes["default"].NOT_FOUND,
+                message: 'Book Not Found'
               });
             }
 
@@ -90,81 +78,74 @@ var register = /*#__PURE__*/function () {
     }, _callee, null, [[0, 8]]);
   }));
 
-  return function register(_x, _x2, _x3) {
+  return function addToWish(_x, _x2, _x3) {
     return _ref.apply(this, arguments);
   };
 }();
 /**
- * Controller to user login
+ * Controller to RemoveBookIntoWishlist
  * @param  {object} req - request object
  * @param {object} res - response object
  * @param {Function} next
  */
 
 
-exports.register = register;
+exports.addToWish = addToWish;
 
-var login = /*#__PURE__*/function () {
+var removeBook = /*#__PURE__*/function () {
   var _ref2 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(req, res, next) {
-    var info, data;
+    var id, data;
     return _regenerator["default"].wrap(function _callee2$(_context2) {
       while (1) {
         switch (_context2.prev = _context2.next) {
           case 0:
             _context2.prev = 0;
-            info = {
-              email: req.body.email,
-              password: req.body.password
+            id = {
+              userId: req.user.id,
+              bookId: req.params.bookId
             };
             _context2.next = 4;
-            return UserService.login(info);
+            return WishlistService.removeBook(id);
 
           case 4:
             data = _context2.sent;
 
-            if (data === 'not register') {
-              _logger["default"].error('User Not Register');
-
-              res.status(_httpStatusCodes["default"].NOT_FOUND).json({
-                code: _httpStatusCodes["default"].NOT_FOUND,
-                message: 'User Not Register'
-              });
-            } else if (data === 'wrong password') {
-              _logger["default"].error('Wrong Password');
-
-              res.status(_httpStatusCodes["default"].FORBIDDEN).json({
-                code: _httpStatusCodes["default"].FORBIDDEN,
-                message: 'Wrong Password'
-              });
-            } else {
-              _logger["default"].info('Login Successfully');
-
-              res.status(_httpStatusCodes["default"].OK).json({
-                code: _httpStatusCodes["default"].OK,
-                message: 'Login Successfully',
-                token: data
-              });
+            if (!data) {
+              _context2.next = 9;
+              break;
             }
 
-            _context2.next = 11;
+            return _context2.abrupt("return", res.status(_httpStatusCodes["default"].OK).json({
+              code: _httpStatusCodes["default"].OK,
+              message: 'Book Removed From Wishlist Successfully'
+            }));
+
+          case 9:
+            return _context2.abrupt("return", res.status(_httpStatusCodes["default"].NOT_FOUND).json({
+              code: _httpStatusCodes["default"].NOT_FOUND,
+              message: 'Book Not Found In Wishlist'
+            }));
+
+          case 10:
+            _context2.next = 15;
             break;
 
-          case 8:
-            _context2.prev = 8;
+          case 12:
+            _context2.prev = 12;
             _context2.t0 = _context2["catch"](0);
             next(_context2.t0);
 
-          case 11:
+          case 15:
           case "end":
             return _context2.stop();
         }
       }
-    }, _callee2, null, [[0, 8]]);
+    }, _callee2, null, [[0, 12]]);
   }));
 
-  return function login(_x4, _x5, _x6) {
+  return function removeBook(_x4, _x5, _x6) {
     return _ref2.apply(this, arguments);
   };
 }();
 
-exports.login = login;
+exports.removeBook = removeBook;

@@ -13,21 +13,27 @@ var _express = _interopRequireDefault(require("express"));
 
 var _user = require("../utils/user.util");
 
-var userController = _interopRequireWildcard(require("../controllers/user.controller"));
+var bookController = _interopRequireWildcard(require("../controllers/book.controller"));
 
-var _user3 = require("../validators/user.validator");
+var _auth = require("../middlewares/auth.middleware");
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
 function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var router = _express["default"].Router(); //route to create a new user registration
+var router = _express["default"].Router(); //route to create a new user addbook
 
 
-router.post('/user', (0, _user.setRole)('user'), _user3.registerValidator, userController.register); //route to create a new admin registration
+router.post('/book', _auth.userAuth, _user.verifyRole, _user.upload.single('bookImage'), bookController.addBook); //route to get all Book
 
-router.post('/admin', (0, _user.setRole)('admin'), _user3.registerValidator, userController.register); //route to login user
+router.get('/book', _auth.userAuth, bookController.allBook); //route to get a single Book by their Bookid
 
-router.post('/login', _user3.loginValidator, userController.login);
+router.get('/book/:BookId', _auth.userAuth, bookController.getBook); //route to update a single Book by their Bookid
+
+router.put('/book/:BookId', _auth.userAuth, bookController.updateBook); //route to delete a single Book by their Bookid
+
+router["delete"]('/book/:BookId', _auth.userAuth, _user.verifyRole, bookController.deleteBook); //route to get search Title
+
+router.get('/search/:title', _auth.userAuth, bookController.serchTitle);
 var _default = router;
 exports["default"] = _default;

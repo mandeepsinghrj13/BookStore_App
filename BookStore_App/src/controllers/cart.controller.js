@@ -2,37 +2,43 @@ import * as UserService from '../services/cart.service';
 import HttpStatus from 'http-status-codes';
 import logger from '../config/logger';
 
-export const addToCart = async (req, res) => {
+/**
+ * Controller to  addToCart
+ * @param  {object} req - request object
+ * @param {object} res - response object
+ * @param {Function} next
+ */
+export const addToCart = async (req, res, next) => {
   try {
     const userInfo = {
       userId: req.user.id,
       bookId: req.params.bookId,
       quantity: req.body.quantity
     };
-    console.log(userInfo, 'userInfo in controller');
     const data = await UserService.addToCart(userInfo);
     if (data == true) {
-      res.status(200).json({
+      res.status(HttpStatus.OK).json({
         message: 'book add into card'
       });
     } else if (data == 'Book qty Update') {
-      res.status(200).json({
+      res.status(HttpStatus.OK).json({
         message: 'Book Quantity Update'
       });
     } else if (data == 'Book Not Found') {
-      res.status(404).json({
+      res.status(HttpStatus.NOT_FOUND).json({
         message: 'Book Not Found'
       });
     } else if (data == 'Book Quantity Is Less') {
-      res.status(404).json({
+      res.status(HttpStatus.NOT_ACCEPTABLE).json({
         message: 'Please Enter Less Quantity'
+      });
+    } else if (data == 'Zero') {
+      res.status(HttpStatus.NOT_ACCEPTABLE).json({
+        message: 'Book Quantity Zero/0 Not Acceptable'
       });
     }
   } catch (error) {
-    return res.status(500).json({
-      message: 'Internal server error',
-      success: false
-    });
+    next(error);
   }
 };
 
