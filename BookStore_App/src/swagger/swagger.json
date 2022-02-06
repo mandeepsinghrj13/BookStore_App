@@ -110,6 +110,79 @@
             }
         },
         "/books/book": {
+            "post": {
+                "tags": ["Book"],
+                "description": "Add new book",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "formData",
+                        "name": "bookImage",
+                        "description": "Upload image file",
+                        "type": "file",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "author",
+                        "description": "Author of book",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "title",
+                        "description": "Title of book",
+                        "type": "string",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "quantity",
+                        "description": "Quantity of book",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "price",
+                        "description": "Price of book",
+                        "type": "number",
+                        "required": true
+                    },
+                    {
+                        "in": "formData",
+                        "name": "description",
+                        "description": "Description of book",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+
+                "produces": ["application/json"],
+                "responses": {
+                    "201": {
+                        "description": "Book Inserted Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
             "get": {
                 "tags": ["Book"],
                 "description": "Get all book",
