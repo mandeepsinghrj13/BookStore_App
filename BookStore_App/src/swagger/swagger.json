@@ -303,6 +303,48 @@
                     }
                 }
             }
+        },
+        "/books/search/{title}":{
+            "get":{
+              "tags":["Book"],
+              "description":"search title",
+              "parameters":[
+                {
+                  "in":"header",
+                  "name":"authorization",
+                  "description":"Token for validation",
+                  "schema":{
+                    "type":"string",
+                    "required":true
+                  }
+                },
+                {
+                    "in": "path",
+                    "name": "title",
+                    "description": "search title"
+                }
+              ],
+              "produces": [
+                "application/json"
+            ],
+              "responses":{
+                "200": {
+                    "description": "Title Fetched Successfully"
+                },
+                "400": {
+                    "description": "Authorization token is required"
+                },
+                "401": {
+                    "description": "invalid token"
+                },
+                "404": {
+                    "description": "Title Not Found"
+                },
+                "500": {
+                    "description": "Internal server error"
+                }
+              }
+            }
         }
     },
     "definitions": {
