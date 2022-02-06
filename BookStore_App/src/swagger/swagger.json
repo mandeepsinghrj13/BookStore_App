@@ -108,6 +108,40 @@
                     }
                 }
             }
+        },
+        "/books/book": {
+            "get": {
+                "tags": ["Book"],
+                "description": "Get all book",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Geting All Book Successfully"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Authorization token is required"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
