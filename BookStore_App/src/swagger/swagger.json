@@ -215,6 +215,94 @@
                     }
                 }
             }
+        },
+        "/books/book/{BookId}": {
+            "get": {
+                "tags": ["Book"],
+                "description": "Get a book by ID",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "BookId",
+                        "in": "path",
+                        "description": "Id of book you want to fetch",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book fetched successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Id Not Found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Book"],
+                "description": "delete a book by ID",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "BookId",
+                        "in": "path",
+                        "description": "delete book by id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book deleted successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Id Not Found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
