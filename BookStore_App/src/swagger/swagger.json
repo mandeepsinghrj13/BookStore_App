@@ -345,6 +345,243 @@
                 }
               }
             }
+        },
+        "/carts/{bookId}": {
+            "post": {
+                "tags": ["Cart"],
+                "description": "Add a cart",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "book add into cart by book id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "Quantity",
+                        "in": "body",
+                        "description": "Quantity add in number",
+                        "schema": { 
+                            "$ref": "#/definitions/addToCart"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "book add into card / Book qty Update"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Book Not Found"
+                    },
+                    "406": {
+                        "description": "Please Enter Less Quantity/Book Quantity Zero/0 Not Acceptable"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/carts": {
+            "get": {
+                "tags": ["Cart"],
+                "description": "get a cart by userid",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Geting All Cart Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/carts/{userId}": {
+            "get": {
+                "tags": ["Cart"],
+                "description": "get a cart by userid",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "get cart by userId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cart Fetched Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Cart Not Found/Cart Is Empty"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Cart"],
+                "description": " Order Placed by userid",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Order Placed by userId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "isPurchased",
+                        "in": "body",
+                        "description": "Order Placed or Order Cencel ",
+                        "schema": { 
+                            "$ref": "#/definitions/isPurchased"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Order Placed/Order Cencel"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Cart Not Found/Cart Is Empty"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Cart"],
+                "description": "delete a book by ID",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "Removed book by userId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "body",
+                        "description": "bookId remove into cart ",
+                        "schema": { 
+                            "$ref": "#/definitions/bookId"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book Removed From Cart Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Cart Not Found/Cart Is Empty"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -385,6 +622,33 @@
             "example": {
                 "email":"example@gmail.com",
                 "password": "Password@123"
+            }
+        },
+        "addToCart": {
+            "type": "object",
+            "properties": {
+                "quantity": {
+                    "type": "number"
+                }
+                
+            }
+        },
+        "isPurchased": {
+            "type": "object",
+            "properties": {
+                "isPurchased": {
+                    "type": "boolean"
+                }
+                
+            }
+        },
+        "bookId": {
+            "type": "object",
+            "properties": {
+                "bookId": {
+                    "type": "string"
+                }
+                
             }
         }
     }
