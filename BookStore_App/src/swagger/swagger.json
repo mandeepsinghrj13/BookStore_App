@@ -582,6 +582,97 @@
                     }
                 }
             }
+        },
+        "/wishlist/{bookId}": {
+            "post": {
+                "tags": ["Wishlist"],
+                "description": "Add to wishlist",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "book add into wishlist by book id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book Added Into wishlist Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Book Not Found"
+                    },
+                    "409": {
+                        "description": "Book Already Into wishlist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Wishlist"],
+                "description": "Removed a book by ID",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "path",
+                        "description": "Removed book by bookId",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book Removed From Wishlist Successfully"
+                    },
+                    "400": {
+                        "description": "Authorization token is required"
+                    },
+                    "401": {
+                        "description": "invalid token"
+                    },
+                    "404": {
+                        "description": "Book Not Found In Wishlist"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "definitions": {
