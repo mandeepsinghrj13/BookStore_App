@@ -260,6 +260,54 @@
                     }
                 }
             },
+            "put": {
+                "tags": ["Book"],
+                "description": "update a book by ID for perticuler person id !!",
+                "parameters": [
+                    {
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "Token for vaidation",
+                        "schema": {
+                            "type": "string",
+                            "required": true
+                        }
+                    },
+                    {
+                        "in": "path",
+                        "name": "BookId",
+                        "description": "Id of book you want to update",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "in": "body",
+                        "name": "note",
+                        "description": "Note body",
+                        "schema": {
+                            "$ref": "#/definitions/updatebooks"
+                        }
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book updated successfully"
+                    },
+                    "401": {
+                        "description": "Please enter Valid Token"
+                    },
+                    "404": {
+                        "description": "BookId Not Found"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            },
             "delete": {
                 "tags": ["Book"],
                 "description": "delete a book by ID",
@@ -740,6 +788,27 @@
                     "type": "string"
                 }
                 
+            }
+        },
+        "updatebooks": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "bookId": {
+                    "type": "string"
+                }
+            },
+            "example": {
+                "author": "Write a author name",
+                "title": "Write a title here.....",
+                "quantity": 1,
+                "price": 100, 
+                "description": "Write a description here....."
             }
         }
     }
