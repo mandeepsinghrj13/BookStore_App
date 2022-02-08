@@ -1,0 +1,7 @@
+{
+    "book": {
+        "validToken": "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlkIjoiNjFmOTQ1NzVjNDhmNjMyMmIwMGY1ZjI5Iiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNjQzNzcwNjA4fQ.s7lL3B2KPx-W_EYiGy4Av5SZpkp_25iMWlCY4c9POkc",
+        "invalidToken": "bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhRm9yVG9rZW4iOnsiZW1haWwiOiJzaW5naC5tci4xOTk2QGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiJ9LCJpYXQiOjE2NDE5MjA1Mzd9.tmGMYfSdOQDHbt5sQJ02pfmf82c_xSH968FYPL0Uu0s"
+        }
+
+}
